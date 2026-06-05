@@ -1,0 +1,11 @@
+query SystemVersions {
+  info {
+    versions {
+      core {
+        unraid
+        api
+        kernel
+      }
+    }
+  }
+}

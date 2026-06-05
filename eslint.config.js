@@ -28,7 +28,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['*.config.ts', 'eslint.config.js'],
+    files: ['*.config.ts', 'eslint.config.js', 'codegen.ts'],
     languageOptions: {
       parserOptions: {
         projectService: false,
