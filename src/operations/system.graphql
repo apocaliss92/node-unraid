@@ -9,3 +9,106 @@ query SystemVersions {
     }
   }
 }
+
+query SystemInfo {
+  info {
+    id
+    time
+    os {
+      platform
+      distro
+      release
+      codename
+      kernel
+      arch
+      hostname
+      build
+      uptime
+      serial
+      uefi
+    }
+    cpu {
+      manufacturer
+      brand
+      vendor
+      family
+      model
+      stepping
+      revision
+      speed
+      speedmin
+      speedmax
+      threads
+      cores
+      processors
+      socket
+      flags
+    }
+    memory {
+      layout {
+        size
+        bank
+        type
+        clockSpeed
+        manufacturer
+        formFactor
+        partNum
+      }
+    }
+    baseboard {
+      manufacturer
+      model
+      version
+      serial
+      assetTag
+      memMax
+      memSlots
+    }
+    system {
+      manufacturer
+      model
+      version
+      serial
+      uuid
+      sku
+      virtual
+    }
+    versions {
+      core {
+        unraid
+        api
+        kernel
+      }
+      packages {
+        docker
+        node
+        npm
+        php
+        nginx
+        openssl
+      }
+    }
+    devices {
+      # gpu is intentionally omitted: this server populates several of InfoGpu's
+      # schema-non-null fields (type, productid) with null, which fails the whole query.
+      network {
+        iface
+        model
+        vendor
+        mac
+        speed
+        dhcp
+      }
+      pci {
+        vendorname
+        productname
+        class
+      }
+      usb {
+        name
+        bus
+        device
+      }
+    }
+  }
+}

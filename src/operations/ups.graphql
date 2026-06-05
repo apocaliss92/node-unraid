@@ -1,0 +1,30 @@
+fragment UpsDeviceFields on UPSDevice {
+  id
+  name
+  model
+  status
+  battery {
+    chargeLevel
+    estimatedRuntime
+    health
+  }
+  power {
+    inputVoltage
+    outputVoltage
+    loadPercentage
+    nominalPower
+    currentPower
+  }
+}
+
+query UpsList {
+  upsDevices {
+    ...UpsDeviceFields
+  }
+}
+
+query UpsById($id: String!) {
+  upsDeviceById(id: $id) {
+    ...UpsDeviceFields
+  }
+}

@@ -1,0 +1,37 @@
+fragment DiskFields on Disk {
+  id
+  device
+  type
+  name
+  vendor
+  size
+  firmwareRevision
+  serialNum
+  interfaceType
+  smartStatus
+  temperature
+  isSpinning
+  partitions {
+    name
+    fsType
+    size
+  }
+}
+
+query DisksList {
+  disks {
+    ...DiskFields
+  }
+}
+
+query DiskById($id: PrefixedID!) {
+  disk(id: $id) {
+    ...DiskFields
+  }
+}
+
+query AssignableDisks {
+  assignableDisks {
+    ...DiskFields
+  }
+}

@@ -1,0 +1,78 @@
+fragment ArrayDiskFields on ArrayDisk {
+  id
+  idx
+  name
+  device
+  size
+  status
+  rotational
+  temp
+  numReads
+  numWrites
+  numErrors
+  fsSize
+  fsFree
+  fsUsed
+  exportable
+  type
+  warning
+  critical
+  fsType
+  comment
+  format
+  transport
+  color
+  isSpinning
+}
+
+fragment ParityCheckFields on ParityCheck {
+  date
+  duration
+  speed
+  status
+  errors
+  progress
+  correcting
+  paused
+  running
+}
+
+query ArrayGet {
+  array {
+    id
+    state
+    capacity {
+      kilobytes {
+        free
+        used
+        total
+      }
+      disks {
+        free
+        used
+        total
+      }
+    }
+    parityCheckStatus {
+      ...ParityCheckFields
+    }
+    boot {
+      ...ArrayDiskFields
+    }
+    parities {
+      ...ArrayDiskFields
+    }
+    disks {
+      ...ArrayDiskFields
+    }
+    caches {
+      ...ArrayDiskFields
+    }
+  }
+}
+
+query ArrayParityHistory {
+  parityHistory {
+    ...ParityCheckFields
+  }
+}

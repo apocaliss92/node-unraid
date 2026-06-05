@@ -22,6 +22,25 @@ if (!host || !apiKey) {
   );
 }
 
+const sharedConfig = {
+  scalars: {
+    BigInt: 'string',
+    DateTime: 'string',
+    JSON: 'unknown',
+    Port: 'number',
+    PrefixedID: 'string',
+  },
+  skipTypename: true,
+  useTypeImports: true,
+  // String-literal unions (not runtime enums): the two generated files then share
+  // identical enum *members*, so an operation result's `state` field and the public
+  // re-exported enum type line up exactly with no nominal mismatch — and it matches
+  // the project's "prefer string-literal unions over enum" style.
+  enumsAsTypes: true,
+  avoidOptionals: { field: true, object: true, inputValue: false },
+  maybeValue: 'T | null',
+};
+
 const config: CodegenConfig = {
   overwrite: true,
   schema: [
@@ -33,25 +52,20 @@ const config: CodegenConfig = {
   ],
   documents: ['src/operations/**/*.graphql'],
   generates: {
+    // Full schema (every enum + input/object type) — the source of the public enum
+    // re-exports and any standalone type access.
+    'src/generated/graphql-types.ts': {
+      plugins: ['typescript'],
+      config: sharedConfig,
+    },
+    // Self-contained: operation result/variable types + TypedDocumentNode constants.
+    // Deliberately NOT importing graphql-types — typescript-operations re-emits the
+    // enums/inputs it uses as local unions with identical members, so the two files
+    // never collide (codegen 7.x does not dedupe typescript vs typescript-operations
+    // in one file, and import-types mis-prefixes typed-document-node's local types).
     'src/generated/sdk.ts': {
-      // TypedDocumentNode (not the getSdk wrapper): each named operation becomes a
-      // `<Name>Document: TypedDocumentNode<Result, Variables>` that graphql-request v7
-      // consumes directly with full type inference — no graphql-tag, no getSdk overloads.
-      plugins: ['typescript', 'typescript-operations', 'typed-document-node'],
-      config: {
-        scalars: {
-          BigInt: 'string',
-          DateTime: 'string',
-          JSON: 'unknown',
-          Port: 'number',
-          PrefixedID: 'string',
-        },
-        skipTypename: true,
-        useTypeImports: true,
-        enumsAsTypes: false,
-        avoidOptionals: { field: true, object: true, inputValue: false },
-        maybeValue: 'T | null',
-      },
+      plugins: ['typescript-operations', 'typed-document-node'],
+      config: sharedConfig,
     },
   },
 };

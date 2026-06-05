@@ -1,0 +1,23 @@
+query ServerInfo {
+  server {
+    id
+    name
+    guid
+    comment
+    status
+    wanip
+    lanip
+    localurl
+    remoteurl
+  }
+}
+
+query ServerRegistration {
+  registration {
+    id
+    type
+    state
+    expiration
+    updateExpiration
+  }
+}

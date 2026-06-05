@@ -1,0 +1,10 @@
+query VmsList {
+  vms {
+    id
+    domains {
+      id
+      name
+      state
+    }
+  }
+}

@@ -1,0 +1,68 @@
+fragment DockerContainerFields on DockerContainer {
+  id
+  names
+  image
+  imageId
+  command
+  created
+  ports {
+    ip
+    privatePort
+    publicPort
+    type
+  }
+  state
+  status
+  autoStart
+  autoStartOrder
+  labels
+  networkSettings
+  mounts
+  sizeRootFs
+  sizeRw
+  templatePath
+  projectUrl
+  registryUrl
+  supportUrl
+  iconUrl
+  webUiUrl
+  isOrphaned
+  isUpdateAvailable
+  isRebuildReady
+}
+
+query DockerList {
+  docker {
+    id
+    containers {
+      ...DockerContainerFields
+    }
+  }
+}
+
+query DockerContainerById($id: PrefixedID!) {
+  docker {
+    container(id: $id) {
+      ...DockerContainerFields
+    }
+  }
+}
+
+query DockerNetworks {
+  docker {
+    networks {
+      id
+      name
+      created
+      scope
+      driver
+      enableIPv6
+      internal
+      attachable
+      ingress
+      configOnly
+      options
+      labels
+    }
+  }
+}

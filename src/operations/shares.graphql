@@ -1,0 +1,20 @@
+query SharesList {
+  shares {
+    id
+    name
+    free
+    used
+    size
+    include
+    exclude
+    cache
+    nameOrig
+    comment
+    allocator
+    splitLevel
+    floor
+    cow
+    color
+    luksStatus
+  }
+}

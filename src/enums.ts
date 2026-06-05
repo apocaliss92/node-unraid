@@ -1,8 +1,9 @@
 // Curated re-export of the GraphQL enums that are part of the public surface.
-// These are real runtime enums (generated), so consumers can both compare against
-// them (`state === ContainerState.Running`) and read their values.
+// These are string-literal union types (e.g. `ContainerState = 'RUNNING' | ...`),
+// so consumers compare with the literal (`state === 'RUNNING'`) and annotate with
+// the named type. Operation result fields use the same members, so they line up.
 
-export {
+export type {
   ContainerState,
   ContainerPortType,
   ArrayState,
@@ -22,4 +23,4 @@ export {
   TemperatureUnit,
   UpsCableType,
   UpsType,
-} from './generated/sdk.js';
+} from './generated/graphql-types.js';

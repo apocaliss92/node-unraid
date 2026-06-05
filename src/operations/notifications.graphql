@@ -1,0 +1,50 @@
+fragment NotificationCountsFields on NotificationCounts {
+  info
+  warning
+  alert
+  total
+}
+
+fragment NotificationFields on Notification {
+  id
+  title
+  subject
+  description
+  importance
+  link
+  type
+  timestamp
+  formattedTimestamp
+}
+
+query NotificationsOverview {
+  notifications {
+    id
+    overview {
+      unread {
+        ...NotificationCountsFields
+      }
+      archive {
+        ...NotificationCountsFields
+      }
+    }
+  }
+}
+
+query NotificationsList($filter: NotificationFilter!) {
+  notifications {
+    id
+    list(filter: $filter) {
+      ...NotificationFields
+    }
+  }
+}
+
+query NotificationsWarningsAndAlerts {
+  notifications {
+    id
+    warningsAndAlerts {
+      ...NotificationFields
+    }
+  }
+}
