@@ -1,6 +1,6 @@
 {
   "name": "node-unraid",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "Node.js/TypeScript client for the Unraid GraphQL API (Docker, array, disks, VMs, system, notifications)",
   "license": "MIT",
   "author": "apocaliss92",

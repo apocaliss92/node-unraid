@@ -39,7 +39,13 @@ export type {
   SystemInfo,
   CpuMetrics,
   MemoryMetrics,
+  ApiSupport,
 } from './domains/system.js';
+export {
+  MINIMUM_API_VERSION,
+  isApiVersionSupported,
+  parseApiVersion,
+} from './support/version-gate.js';
 export type { VmsDomain, VmDomain } from './domains/vms.js';
 export type { SharesDomain, Share } from './domains/shares.js';
 export type { UpsDomain, UpsDevice, UpsUpdate } from './domains/ups.js';
