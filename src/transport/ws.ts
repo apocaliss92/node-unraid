@@ -31,6 +31,12 @@ export interface UnraidWs {
   dispose(): Promise<void>;
 }
 
+/** A bound subscribe function handed to domains that expose `*$()` subscriptions. */
+export type SubscribeFn = <TResult, TVariables>(
+  document: TypedDocumentNode<TResult, TVariables>,
+  variables?: TVariables,
+) => AsyncIterable<TResult>;
+
 /** Build the WebSocket endpoint URL from connection options. */
 export function buildWsEndpoint(host: string, port?: number, https?: boolean): string {
   const scheme = https ? 'wss' : 'ws';

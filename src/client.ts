@@ -1,5 +1,10 @@
 import { createHttpClient, type FetchImpl, type UnraidHttp } from './transport/http.js';
-import { createWsClient, type UnraidWs, type WebSocketImpl } from './transport/ws.js';
+import {
+  createWsClient,
+  type UnraidWs,
+  type WebSocketImpl,
+  type SubscribeFn,
+} from './transport/ws.js';
 import { UnraidError } from './errors.js';
 import type { TypedDocumentNode } from '@graphql-typed-document-node/core';
 import { createDockerDomain, type DockerDomain } from './domains/docker.js';
@@ -68,14 +73,17 @@ export class UnraidClient {
     this.#http = createHttpClient(options);
     this.#wsOptions = options;
 
-    this.docker = createDockerDomain(this.#http);
+    const subscribe: SubscribeFn = (document, variables) =>
+      this.#subscriptions().subscribe(document, variables);
+
+    this.docker = createDockerDomain(this.#http, subscribe);
     this.array = createArrayDomain(this.#http);
     this.disks = createDisksDomain(this.#http);
-    this.system = createSystemDomain(this.#http);
+    this.system = createSystemDomain(this.#http, subscribe);
     this.vms = createVmsDomain(this.#http);
     this.shares = createSharesDomain(this.#http);
-    this.ups = createUpsDomain(this.#http);
-    this.notifications = createNotificationsDomain(this.#http);
+    this.ups = createUpsDomain(this.#http, subscribe);
+    this.notifications = createNotificationsDomain(this.#http, subscribe);
     this.server = createServerDomain(this.#http);
   }
 

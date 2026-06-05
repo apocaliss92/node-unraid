@@ -1,0 +1,217 @@
+## Docker control
+
+mutation DockerStart($id: PrefixedID!) {
+  docker {
+    start(id: $id) {
+      id
+      state
+      status
+    }
+  }
+}
+
+mutation DockerStop($id: PrefixedID!) {
+  docker {
+    stop(id: $id) {
+      id
+      state
+      status
+    }
+  }
+}
+
+mutation DockerPause($id: PrefixedID!) {
+  docker {
+    pause(id: $id) {
+      id
+      state
+      status
+    }
+  }
+}
+
+mutation DockerUnpause($id: PrefixedID!) {
+  docker {
+    unpause(id: $id) {
+      id
+      state
+      status
+    }
+  }
+}
+
+mutation DockerUpdateContainer($id: PrefixedID!) {
+  docker {
+    updateContainer(id: $id) {
+      id
+      state
+      status
+    }
+  }
+}
+
+mutation DockerRemoveContainer($id: PrefixedID!, $withImage: Boolean) {
+  docker {
+    removeContainer(id: $id, withImage: $withImage)
+  }
+}
+
+## Array control
+
+mutation ArraySetState($input: ArrayStateInput!) {
+  array {
+    setState(input: $input) {
+      id
+      state
+    }
+  }
+}
+
+mutation ArrayMountDisk($id: PrefixedID!) {
+  array {
+    mountArrayDisk(id: $id) {
+      id
+      status
+    }
+  }
+}
+
+mutation ArrayUnmountDisk($id: PrefixedID!) {
+  array {
+    unmountArrayDisk(id: $id) {
+      id
+      status
+    }
+  }
+}
+
+mutation ArrayClearDiskStatistics($id: PrefixedID!) {
+  array {
+    clearArrayDiskStatistics(id: $id)
+  }
+}
+
+## Parity check control
+
+mutation ParityCheckStart($correct: Boolean!) {
+  parityCheck {
+    start(correct: $correct)
+  }
+}
+
+mutation ParityCheckPause {
+  parityCheck {
+    pause
+  }
+}
+
+mutation ParityCheckResume {
+  parityCheck {
+    resume
+  }
+}
+
+mutation ParityCheckCancel {
+  parityCheck {
+    cancel
+  }
+}
+
+## VM control
+
+mutation VmStart($id: PrefixedID!) {
+  vm {
+    start(id: $id)
+  }
+}
+
+mutation VmStop($id: PrefixedID!) {
+  vm {
+    stop(id: $id)
+  }
+}
+
+mutation VmPause($id: PrefixedID!) {
+  vm {
+    pause(id: $id)
+  }
+}
+
+mutation VmResume($id: PrefixedID!) {
+  vm {
+    resume(id: $id)
+  }
+}
+
+mutation VmForceStop($id: PrefixedID!) {
+  vm {
+    forceStop(id: $id)
+  }
+}
+
+mutation VmReboot($id: PrefixedID!) {
+  vm {
+    reboot(id: $id)
+  }
+}
+
+mutation VmReset($id: PrefixedID!) {
+  vm {
+    reset(id: $id)
+  }
+}
+
+## Notification control
+
+mutation NotificationArchive($id: PrefixedID!) {
+  archiveNotification(id: $id) {
+    id
+    type
+  }
+}
+
+mutation NotificationUnread($id: PrefixedID!) {
+  unreadNotification(id: $id) {
+    id
+    type
+  }
+}
+
+mutation NotificationArchiveAll($importance: NotificationImportance) {
+  archiveAll(importance: $importance) {
+    unread {
+      ...NotificationCountsFields
+    }
+    archive {
+      ...NotificationCountsFields
+    }
+  }
+}
+
+mutation NotificationDelete($id: PrefixedID!, $type: NotificationType!) {
+  deleteNotification(id: $id, type: $type) {
+    unread {
+      ...NotificationCountsFields
+    }
+    archive {
+      ...NotificationCountsFields
+    }
+  }
+}
+
+mutation NotificationDeleteArchived {
+  deleteArchivedNotifications {
+    unread {
+      ...NotificationCountsFields
+    }
+    archive {
+      ...NotificationCountsFields
+    }
+  }
+}
+
+mutation NotificationCreate($input: NotificationData!) {
+  createNotification(input: $input) {
+    ...NotificationFields
+  }
+}

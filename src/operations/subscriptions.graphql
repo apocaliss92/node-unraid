@@ -1,0 +1,43 @@
+subscription DockerContainerStatsSub {
+  dockerContainerStats {
+    id
+    cpuPercent
+    memUsage
+    memPercent
+    netIO
+    blockIO
+  }
+}
+
+subscription NotificationAddedSub {
+  notificationAdded {
+    ...NotificationFields
+  }
+}
+
+subscription UpsUpdatesSub {
+  upsUpdates {
+    ...UpsDeviceFields
+  }
+}
+
+subscription SystemMetricsCpuSub {
+  systemMetricsCpu {
+    id
+    percentTotal
+  }
+}
+
+subscription SystemMetricsMemorySub {
+  systemMetricsMemory {
+    id
+    total
+    used
+    free
+    available
+    percentTotal
+    swapTotal
+    swapUsed
+    swapFree
+  }
+}
